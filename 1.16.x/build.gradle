@@ -1,0 +1,87 @@
+buildscript {
+	repositories {
+        mavenCentral()
+		maven { url = 'https://files.minecraftforge.net/maven' }
+	}
+	dependencies {
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+
+version = "1.0.0-SNAPSHOT"
+group = "com.firecontroller1847.modtesting"
+archivesBaseName = "modtesting-1.16.5"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+	mappings channel: 'official', version: '1.16.5'
+	
+	runs {
+		client {
+			workingDirectory project.file('run/client')
+			
+			// Logging Data
+			property 'forge.logging.markers', 'REGISTRIES'
+			
+			// Logging Level
+			property 'forge.logging.console.level', 'debug'
+            
+            // Source Sets
+            mods {
+                modtesting {
+                    source sourceSets.main
+                }
+            }
+		}
+		
+		server {
+			workingDirectory project.file('run/server')
+		
+			// Logging Data
+			property 'forge.logging.markers', 'REGISTRIES'
+			
+			// Logging Level
+			property 'forge.logging.console.level', 'debug'
+            
+            // Source Sets
+            mods {
+                modtesting {
+                    source sourceSets.main
+                }
+            }
+		}
+        
+        data {
+            workingDirectory project.file('run/data')
+
+            // Logging Data
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Logging Level
+            property 'forge.logging.console.level', 'debug'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', 'modtesting', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            
+            // Source Sets
+            mods {
+                modtesting {
+                    source sourceSets.main
+                }
+            }
+        }
+	}
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
+
+}
+
+jar.finalizedBy('reobfJar') 
