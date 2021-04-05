@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "modtesting:block/stune"
+      },
+      {
+        "model": "modtesting:block/stune_mirrored"
+      },
+      {
+        "model": "modtesting:block/stune",
+        "y": 180
+      },
+      {
+        "model": "modtesting:block/stune_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}
